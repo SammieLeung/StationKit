@@ -15,3 +15,5 @@ release/
 .externalNativeBuild
 .cxx
 local.properties
+packgit.sh
+unpackgit.sh
