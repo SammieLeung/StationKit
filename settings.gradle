@@ -1,2 +1,2 @@
 rootProject.name = "StationUniversalDevelopmentKit"
-include ':app'
+include ':stationkit'
