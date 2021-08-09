@@ -1,12 +1,13 @@
-package com.firefly.filepicker.utils;
+package com.station.kit.util;
 
 import android.content.Context;
 import android.os.Build;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
-import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.BufferedReader;
 import java.io.File;
