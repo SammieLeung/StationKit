@@ -1,4 +1,4 @@
-package com.firelfy.util;
+package com.station.kit.util;
 
 import android.Manifest;
 import android.app.Activity;
