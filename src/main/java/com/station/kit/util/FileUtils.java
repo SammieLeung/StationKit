@@ -7,8 +7,12 @@ package com.station.kit.util;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Created by kingt on 2018/1/30.
@@ -24,15 +28,35 @@ public class FileUtils {
         return "";
     }
 
-    public static File[] getMediaFiles(String parentPath){
-        final File parentFile=new File(parentPath);
-        if(parentFile.exists()&&parentFile.isDirectory()){
-            File[] subFiles=parentFile.listFiles(new FileFilter() {
+
+    public static File[] getMediaFiles(String parentPath) {
+        return getMediaFiles(parentPath, false);
+    }
+
+    public static File[] getMediaFiles(String parentPath, boolean isRecursive) {
+        final File parentFile = new File(parentPath);
+        if (parentFile.exists() && parentFile.isDirectory()) {
+            File[] subFiles = parentFile.listFiles(new FileFilter() {
                 @Override
                 public boolean accept(File pathname) {
-                    return pathname.isFile()&&!parentFile.isHidden()&& FileUtils.isMediaFile(pathname.getName());
+                    return pathname.isFile() && !parentFile.isHidden() && FileUtils.isMediaFile(pathname.getName());
                 }
             });
+            if (isRecursive) {
+                File[] subDirs = parentFile.listFiles(new FileFilter() {
+                    @Override
+                    public boolean accept(File pathname) {
+                        return pathname.isDirectory();
+                    }
+                });
+                for (File subDir : subDirs) {
+                    File[] subFiles2 = getMediaFiles(subDir.getPath(), isRecursive);
+                    File[] desFiles=new File[subFiles2.length+subFiles.length];
+                    System.arraycopy(subFiles,0,desFiles,0,subFiles.length);
+                    System.arraycopy(subFiles2, 0, desFiles, subFiles.length, subFiles2.length);
+                    subFiles=desFiles;
+                }
+            }
             return subFiles;
         }
         return null;
@@ -158,5 +182,21 @@ public class FileUtils {
                 return true;
         }
         return false;
+    }
+
+    public static String readFromFile(File file) {
+        if ((file != null) && file.exists()) {
+            try {
+                FileInputStream fin = new FileInputStream(file);
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(fin));
+                String value = reader.readLine();
+                fin.close();
+                return value;
+            } catch (IOException e) {
+                return null;
+            }
+        }
+        return null;
     }
 }

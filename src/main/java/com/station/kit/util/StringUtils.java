@@ -1,5 +1,11 @@
 package com.station.kit.util;
 
+import android.text.TextUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 public class StringUtils {
 
     public static String generateTime(long time) {
