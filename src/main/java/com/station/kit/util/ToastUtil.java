@@ -1,7 +1,9 @@
 package com.station.kit.util;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -37,12 +39,18 @@ public class ToastUtil {
         }
         mToastArrayList.clear();
         if (!TextUtils.isEmpty(msg)) {
-            Toast toast = Toast.makeText(mContext,
-                    msg,
-                    peroid);
-            toast.show();
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast toast = Toast.makeText(mContext,
+                            msg,
+                            peroid);
+                    toast.show();
+                    mToastArrayList.add(toast);
+                }
+            });
 
-            mToastArrayList.add(toast);
+
             mTimeMonitor = new ToastDisplayTimeMonitor();
             mHandler.postDelayed(mTimeMonitor, 2000);
         }
