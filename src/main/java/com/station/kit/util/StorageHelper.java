@@ -62,9 +62,9 @@ public class StorageHelper {
                 Method getDirectory = clz.getDeclaredMethod("getDirectory");
                 getDirectory.setAccessible(true);
                 File file = (File) getDirectory.invoke(volume);
-                if(file!=null&&file.exists()){
+                if (file != null && file.exists()) {
                     return file.getPath();
-                }else{
+                } else {
                     return "";
                 }
             } else {
@@ -165,6 +165,8 @@ public class StorageHelper {
                     }
                 }
             }
+        } catch (NoSuchMethodException e) {
+            LogUtil.e("NoSuchMethodException:"+e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             Log.i(TAG, "get " + method + "->exception:" + e);
