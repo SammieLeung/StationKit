@@ -1,139 +1,27 @@
-/*******************************************************************
- * Company:     Fuzhou Rockchip Electronics Co., Ltd
- * Description:   
- * @author:     fxw@rock-chips.com
- * Create at:   2014年5月7日 下午2:56:57  
- * 
- * Modification History:  
- * Date         Author      Version     Description  
- * ------------------------------------------------------------------  
- * 2014年5月7日      fxw         1.0         create
- *******************************************************************/   
-
-package com.firelfy.util;
-
-import android.text.TextUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+package com.station.kit.util;
 
 public class StringUtils {
 
-	/**
-	 * Check that the given CharSequence is neither <code>null</code> nor of length 0.
-	 * @return <code>true</code> if the obj is not null and obj.toString() has length
-	 */
-	public static boolean isEmptyObj(Object obj) {
-		return obj == null || "".equals(obj);
-	}
+    public static String generateTime(long time) {
+        int totalSeconds = (int) (time / 1000);
+        int seconds = totalSeconds % 60;
+        int minutes = (totalSeconds / 60) % 60;
+        int hours = totalSeconds / 3600;
 
-	/**
-	 * Check that the given CharSequence is neither <code>null</code> nor of length 0.
-	 * Note: Will return <code>true</code> for a CharSequence that purely consists of whitespace.
-	 * <p><pre>
-	 * StringUtils.hasLength(null) = false
-	 * StringUtils.hasLength("") = false
-	 * StringUtils.hasLength(" ") = true
-	 * StringUtils.hasLength("Hello") = true
-	 * </pre>
-	 * @param str the CharSequence to check (may be <code>null</code>)
-	 * @return <code>true</code> if the CharSequence is not null and has length
-	 * @see #hasText(String)
-	 */
-	public static boolean hasLength(CharSequence str) {
-		return (str != null && str.length() > 0);
-	}
+        return hours > 0 ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
+    }
 
-	/**
-	 * Convert string to int
-	 * @param str
-	 * @param def
-	 * @return
-	 */
-	public static int parseInt(String str, int def){
-		int result = def;
-		try{
-			if(str!=null)
-				result = Integer.parseInt(str);
-		}catch(Exception e){
-		}
-		return result;
-	}
-	
-	public static boolean parseBoolean(String str, boolean def){
-		boolean result = def;
-		try{
-			if(str!=null)
-			{
-				int value = Integer.parseInt(str);
-				return (value == 1);
-			}
-		}catch(Exception e){
-		}
-		return result;
-	}
+    public static boolean isGB2312(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            String bb = str.substring(i, i + 1);
+            // 生成一个Pattern,同时编译一个正则表达式,其中的u4E00("一"的unicode编码)-\u9FA5("龥"的unicode编码)
+            boolean cc = java.util.regex.Pattern.matches("[\u4E00-\u9FA5]", bb);
+            if (cc == false) {
+                return cc;
+            }
+        }
+        return true;
+    }
 
-	public static boolean getBooleanValue(String str, boolean def)
-	{
-		boolean result = def;
-		try{
-			if(str!=null)
-				result = (Integer.parseInt(str)==0?false:true);
-		}catch(Exception e){
-		}
-		return result;
-	}
-
-	public static String getStringValue(String str, String def)
-	{
-		if(str == null || str.length()==0)
-		{
-			return def;
-		}
-		return str;
-	}
-
-	public static String generateTime(long time) {
-		int totalSeconds = (int) (time / 1000);
-		int seconds = totalSeconds % 60;
-		int minutes = (totalSeconds / 60) % 60;
-		int hours = totalSeconds / 3600;
-
-		return hours > 0 ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
-	}
-
-	public static String getFileNameFromPath(String path) {
-		String[] mstrs = path.split("/");
-		int length = mstrs.length;
-		if(length == 0)
-			return "";
-		return mstrs[length - 1];
-	}
-	
-	
-	
-	public  static String[] matcher(String regex, String input) {
-		return matcher(regex, Pattern.CASE_INSENSITIVE, input);
-	}
-	public  static String[] matcher(String regex, int flag, String input) {
-		Pattern pattern = Pattern.compile(regex,flag);
-		Matcher matcher = pattern.matcher(input);
-		List<String> list = new ArrayList<String>();
-		while (matcher.find()) {
-			for (int i = 0; i <= matcher.groupCount(); i++) {
-				list.add(matcher.group(i));
-			}
-		}
-		return list.toArray(new String[0]);
-	}
-	
-	public static boolean isMatcher(String regex, String input)
-	{
-		if(TextUtils.isEmpty(input) || TextUtils.isEmpty(regex))return false;
-		String[] match = StringUtils.matcher(regex, input);
-		return 	match != null && match.length>0;
-	}
 
 }
