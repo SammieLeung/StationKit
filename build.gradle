@@ -24,6 +24,10 @@ android {
     lintOptions {
         disable('AllowBackup', 'GoogleAppIndexingWarning', 'MissingApplicationIcon')
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
