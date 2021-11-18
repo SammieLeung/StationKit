@@ -7,8 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.station.kit.view.ViewDataBindingHelper;
-import com.station.kit.view.ViewModelHelper;
+import com.station.kit.view.mvvm.ViewDataBindingHelper;
+import com.station.kit.view.mvvm.ViewModelHelper;
+
 
 /**
  * author: Sam Leung
@@ -24,7 +25,7 @@ public abstract class BaseInflateActivity<VM extends AndroidViewModel, VDB exten
         mBinding = ViewDataBindingHelper.inflateVDB(this);
         setContentView(mBinding.getRoot());
         mBinding.setLifecycleOwner(this);
-        mViewModel=ViewModelHelper.createAndroidViewModel(this,this);
+        mViewModel= ViewModelHelper.createAndroidViewModel(this,this);
     }
 
     public VDB getBinding() {
