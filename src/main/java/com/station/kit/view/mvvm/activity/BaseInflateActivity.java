@@ -1,4 +1,4 @@
-package com.station.kit.view.activity;
+package com.station.kit.view.mvvm.activity;
 
 import android.os.Bundle;
 

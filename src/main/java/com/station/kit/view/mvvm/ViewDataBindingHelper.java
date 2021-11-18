@@ -1,4 +1,4 @@
-package com.station.kit.view;
+package com.station.kit.view.mvvm;
 
 import android.content.Context;
 import android.view.LayoutInflater;
