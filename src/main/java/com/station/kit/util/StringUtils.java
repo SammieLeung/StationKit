@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 public class StringUtils {
 
     public static String generateTime(long time) {
@@ -27,6 +28,16 @@ public class StringUtils {
             }
         }
         return true;
+    }
+
+    public static int parseInt(String str, int def) {
+        int result = def;
+        try {
+            if (str != null)
+                result = Integer.parseInt(str);
+        } catch (Exception e) {
+        }
+        return result;
     }
 
 
