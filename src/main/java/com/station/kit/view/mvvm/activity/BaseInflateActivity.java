@@ -22,10 +22,10 @@ public abstract class BaseInflateActivity<VM extends AndroidViewModel, VDB exten
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = ViewDataBindingHelper.inflateVDB(this);
+        mBinding = ViewDataBindingHelper.inflateVDB(this,this.getClass());
         setContentView(mBinding.getRoot());
         mBinding.setLifecycleOwner(this);
-        mViewModel= ViewModelHelper.createAndroidViewModel(this,this);
+        mViewModel= ViewModelHelper.createAndroidViewModel(this,this,this.getClass());
     }
 
     public VDB getBinding() {

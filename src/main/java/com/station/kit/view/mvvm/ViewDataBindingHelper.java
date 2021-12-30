@@ -23,8 +23,8 @@ public class ViewDataBindingHelper {
      * @param <VDB>
      * @return
      */
-    public static <VDB extends ViewDataBinding> VDB inflateVDB(Context context) {
-        Class modelClass = getViewDataBindingModelClass(context.getClass());
+    public static <VDB extends ViewDataBinding> VDB inflateVDB(Context context,Class clazz) {
+        Class modelClass = getViewDataBindingModelClass(clazz);
         if (modelClass != null) {
             Method inflate = null;
             try {

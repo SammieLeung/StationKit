@@ -22,8 +22,8 @@ public class ViewModelHelper {
      * @param <VM>
      * @return
      */
-    public static <VM extends ViewModel> VM createAndroidViewModel(Context context, ViewModelStoreOwner owner) {
-        Class modelClass = getViewModelClass(context.getClass());
+    public static <VM extends ViewModel> VM createAndroidViewModel(Context context, ViewModelStoreOwner owner,Class clazz) {
+        Class modelClass = getViewModelClass(clazz);
         return (VM) new ViewModelProvider(owner).get(modelClass);
 
     }
