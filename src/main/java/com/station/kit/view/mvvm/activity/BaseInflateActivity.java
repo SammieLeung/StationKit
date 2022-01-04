@@ -25,7 +25,7 @@ public abstract class BaseInflateActivity<VM extends AndroidViewModel, VDB exten
         mBinding = ViewDataBindingHelper.inflateVDB(this,this.getClass());
         setContentView(mBinding.getRoot());
         mBinding.setLifecycleOwner(this);
-        mViewModel= ViewModelHelper.createAndroidViewModel(this,this,this.getClass());
+        mViewModel= ViewModelHelper.createAndroidViewModel(this,this.getClass());
     }
 
     public VDB getBinding() {
