@@ -13,17 +13,17 @@ import java.lang.reflect.Type;
 /**
  * author: Sam Leung
  * date:  2021/10/28
- *
  */
 public class ViewDataBindingHelper {
 
     /**
      * 生成ViewDataBinding
+     *
      * @param context
      * @param <VDB>
      * @return
      */
-    public static <VDB extends ViewDataBinding> VDB inflateVDB(Context context,Class clazz) {
+    public static <VDB extends ViewDataBinding> VDB inflateVDB(Context context, Class clazz) {
         Class modelClass = getViewDataBindingModelClass(clazz);
         if (modelClass != null) {
             Method inflate = null;
@@ -44,6 +44,7 @@ public class ViewDataBindingHelper {
 
     /**
      * 获取ViewDataBinding的具体类
+     *
      * @param clazz
      * @return
      */
@@ -55,7 +56,7 @@ public class ViewDataBindingHelper {
         if (type instanceof ParameterizedType) {
             ParameterizedType tmpType = (ParameterizedType) type;
             for (Type t : tmpType.getActualTypeArguments()) {
-                if (instanceOfViewDataBinding((Class) t))
+                if (t instanceof Class && instanceOfViewDataBinding((Class) t))
                     modelClass = (Class) t;
             }
             if (modelClass == null)
@@ -68,6 +69,7 @@ public class ViewDataBindingHelper {
 
     /**
      * 判断一个类是否继承ViewDataBinding
+     *
      * @param clazz
      * @return
      */

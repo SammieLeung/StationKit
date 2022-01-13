@@ -40,7 +40,7 @@ public class ViewModelHelper {
         if (type instanceof ParameterizedType) {
             ParameterizedType tmpType = (ParameterizedType) type;
             for (Type t : tmpType.getActualTypeArguments()) {
-                if (instanceOfViewModel((Class) t))
+                if (t instanceof  Class&&instanceOfViewModel((Class) t))
                     modelClass = (Class) t;
             }
             if (modelClass == null)
