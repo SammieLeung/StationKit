@@ -2,6 +2,7 @@ package com.station.kit.view.mvvm;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import androidx.databinding.ViewDataBinding;
 
@@ -31,6 +32,31 @@ public class ViewDataBindingHelper {
                 inflate = modelClass.getDeclaredMethod("inflate", LayoutInflater.class);
                 return (VDB) inflate.invoke(null, LayoutInflater.from(context));
 
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 生成ViewDataBinding
+     *
+     * @param context
+     * @param <VDB>
+     * @return
+     */
+    public static <VDB extends ViewDataBinding> VDB inflateVDB(Context context, ViewGroup parent, Class clazz) {
+        Class modelClass = getViewDataBindingModelClass(clazz);
+        if (modelClass != null) {
+            Method inflate = null;
+            try {
+                inflate = modelClass.getDeclaredMethod("inflate", LayoutInflater.class,ViewGroup.class,boolean.class);
+                return (VDB) inflate.invoke(null, LayoutInflater.from(context),parent,false);
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
