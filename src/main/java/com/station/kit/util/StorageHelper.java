@@ -2,6 +2,7 @@ package com.station.kit.util;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
 import android.text.TextUtils;
@@ -178,6 +179,9 @@ public class StorageHelper {
 
 
     public static String getFlashStoragePath(Context context) {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
+            return Environment.getExternalStorageDirectory().getPath();
+        }
         StorageManager storageManager = (StorageManager) context
                 .getSystemService(Context.STORAGE_SERVICE);
         List<StorageVolume> volumes = storageManager.getStorageVolumes();
