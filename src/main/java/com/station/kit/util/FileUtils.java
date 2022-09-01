@@ -145,7 +145,7 @@ public class FileUtils {
     public static boolean isLiveMedia(String url) {
         if (TextUtils.isEmpty(url)) return false;
         String uri = url.toLowerCase();
-        if (uri.startsWith("http://") || url.startsWith("https://") || url.startsWith("rtmp://") || url.startsWith("rtmps://") || url.startsWith("mms://")) {
+        if (url.startsWith("rtmp://") || url.startsWith("rtmps://") || url.startsWith("mms://")) {
             return true;
         } else {
             return false;
