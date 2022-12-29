@@ -182,17 +182,29 @@ public class StorageHelper {
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
             return Environment.getExternalStorageDirectory().getPath();
         }
-        StorageManager storageManager = (StorageManager) context
-                .getSystemService(Context.STORAGE_SERVICE);
-        List<StorageVolume> volumes = storageManager.getStorageVolumes();
-        int count = volumes.size();
+        String storagePath="";
+        try{
+            storagePath=Environment.getExternalStorageDirectory().getPath();
+            if(!TextUtils.isEmpty(storagePath))
+                return storagePath;
+            StorageManager storageManager = (StorageManager) context
+                    .getSystemService(Context.STORAGE_SERVICE);
+            List<StorageVolume> volumes = storageManager.getStorageVolumes();
+            int count = volumes.size();
 
-        for (int i = 0; i < count; i++) {
-            if (volumes.get(i).isPrimary())
-                return getVolumePath(volumes.get(i));
+            for (int i = 0; i < count; i++) {
+                if (volumes.get(i).isPrimary()) {
+                    storagePath = getVolumePath(volumes.get(i));
+                    if(!TextUtils.isEmpty(storagePath))
+                        return storagePath;
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return "storage/emulated/0";
 
-        return "";
     }
 
     /**
