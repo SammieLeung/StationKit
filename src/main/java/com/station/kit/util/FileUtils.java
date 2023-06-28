@@ -83,6 +83,8 @@ public class FileUtils {
             case ".vob":
             case ".m3u8":
             case ".webm":
+            case ".m2ts":
+            case ".iso":
                 return true;
             default:
                 return false;
