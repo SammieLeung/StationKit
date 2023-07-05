@@ -51,10 +51,10 @@ public class FileUtils {
                 });
                 for (File subDir : subDirs) {
                     File[] subFiles2 = getMediaFiles(subDir.getPath(), isRecursive);
-                    File[] desFiles=new File[subFiles2.length+subFiles.length];
-                    System.arraycopy(subFiles,0,desFiles,0,subFiles.length);
+                    File[] desFiles = new File[subFiles2.length + subFiles.length];
+                    System.arraycopy(subFiles, 0, desFiles, 0, subFiles.length);
                     System.arraycopy(subFiles2, 0, desFiles, subFiles.length, subFiles2.length);
-                    subFiles=desFiles;
+                    subFiles = desFiles;
                 }
             }
             return subFiles;
@@ -120,15 +120,15 @@ public class FileUtils {
         return fileName;
     }
 
-    public static String getLastFolderName(String path){
+    public static String getLastFolderName(String path) {
         if (TextUtils.isEmpty(path)) return "";
         String fileName = path;
-        if(fileName.endsWith(File.separator)){
-            fileName=   fileName.substring(0,fileName.lastIndexOf(File.separator));
+        if (fileName.endsWith(File.separator)) {
+            fileName = fileName.substring(0, fileName.lastIndexOf(File.separator));
         }
-        int p=fileName.lastIndexOf(File.separatorChar);
-        if(p!=-1)
-            fileName=fileName.substring(p+1,fileName.length());
+        int p = fileName.lastIndexOf(File.separatorChar);
+        if (p != -1)
+            fileName = fileName.substring(p + 1, fileName.length());
         return fileName;
     }
 
@@ -140,8 +140,32 @@ public class FileUtils {
                 if (f.isDirectory()) deleteDirFiles(f);
                 f.delete();
             } catch (SecurityException e) {
+                e.printStackTrace();
             }
         }
+    }
+
+
+    public static void deleteFile(File file, Boolean force) {
+        if (!file.exists())
+            return;
+        if (file.isFile()) {
+            file.delete();
+        } else if (file.isDirectory() && force) {
+            try {
+                File[] files = file.listFiles();
+                for (File f : files) {
+                    if (f.isDirectory())
+                        deleteFile(f, force);
+                    else
+                        f.delete();
+                }
+                file.delete();
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public static boolean isLiveMedia(String url) {
